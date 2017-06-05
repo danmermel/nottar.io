@@ -51,12 +51,49 @@ var abi = [{
     type: "constructor"
 }];
 
-setTimeout(function() {
-  console.log("creating contract, with", web3.eth.accounts[0]);
-  var nottarioContract = web3.eth.contract(abi);
-  var nottario =nottarioContract.new( "wembley", "Taylor Swift", {from:web3.eth.accounts[0], data: bin, gas: 3000000, value: 1000000}, function(err,data) {
-    console.log(err,data) } );
-}, 1000);
+var app = new Vue({
+  el: '#app',
+  data: {
+    hash:"",
+    name:"",
+    error: "",
+    web3Missing: false,
+    loggedIn: true,
+    animate: false
+  },
+  mounted:function(){
+   setTimeout(function() {
+      //console.log('here', web3.eth.accounts, web3.eth.accounts.length);
+      if (typeof web3 === 'undefined') {
+        app.web3Missing = true;
+      } else {
+        if (!web3.eth.accounts || web3.eth.accounts.length == 0) {
+          app.loggedIn = false;
+        }
+      }
+    },1000)
+  },
+  methods: {
+    create_contract: function () {
+      // `this` inside methods points to the Vue instance
+      console.log("creating contract, with", web3.eth.accounts[0]);
+      var nottarioContract = web3.eth.contract(abi);
+      var nottario =nottarioContract.new( this.hash, this.name, {from:web3.eth.accounts[0], data: bin, gas: 3000000, value: 1000000}, function(err,data) {
+        console.log(err, data);
+        if (err)  {
+          app.error = err;
+        } else {
+          if (data.address) {
+            window.location = 'contract.html#' + data.address;
+          } else {
+            app.animate = true;
+          }
+        }
+      });
+        // `event` is the native DOM event
+    }
+  }
+})
 
 
 

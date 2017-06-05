@@ -7,31 +7,28 @@
   <title>Nottario - Blockhain-powered Nottary</title>
 
   <!-- CSS  -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <div id="index-banner" class="parallax-container">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <br><br>
-        <h1 class="header center teal-text text-lighten-2">NOttario</h1>
-        <div class="row center">
-          <h5 class="header col s12 light">A descentralized nottary powered by the Ethereum Blockchain</h5>
-        </div>
-        <div class="row center">
-          <a href="Javascript:reveal()" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Play!</a>
-        </div>
-        <br><br>
-      </div>
+  <div id="app">
+    <div v-if="web3Missing">
+      <p>Please install the Metamask Plugin or Mist Browser to use Nottario</p>
     </div>
-    <div class="parallax"><img src="cat3.jpg" alt="Unsplashed background img 1"></div>
+    <div v-if="!loggedIn">
+      <p>You appeared to be logged out of Metamask. Please log in to continue using Nottario</p>
+    </div>
+    <div v-if="!web3Missing && loggedIn">
+      <input v-model="hash" placeholder="Enter Hash">
+      <input v-model="name" placeholder="Enter Name">
+      <button :disabled="!hash || !name || hash.length!=32" v-on:click="create_contract">Create Contract</button>
+    </div>
+    <div v-if="animate">
+      <p>I am animating!!! Waiting for Blockchain</p>
+    </div>
   </div>
-
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
   <script src="js/nottario.js"></script>
   </body>
 </html>
