@@ -95,7 +95,24 @@ var app = new Vue({
   }
 })
 
+function allowDrop(ev) {
+    ev.preventDefault();
+}
 
+function drop_handler(ev) {
+  console.log("Drop");
+  ev.preventDefault();
+
+  var f = ev.dataTransfer.files[0];
+
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    //console.log('onload!',event);
+    console.log(event.target.result)
+
+  };
+  reader.readAsText(f);
+}
 
 
 

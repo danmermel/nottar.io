@@ -18,6 +18,11 @@
       <p>You appeared to be logged out of Metamask. Please log in to continue using Nottario</p>
     </div>
     <div v-if="!web3Missing && loggedIn">
+      <div id="drop_zone" ondrop="drop_handler(event);" ondragover="allowDrop(event)">
+        <strong>Drag one or more files to this Drop Zone ...</strong>
+      </div>
+
+
       <input v-model="hash" placeholder="Enter Hash">
       <input v-model="name" placeholder="Enter Name">
       <button :disabled="!hash || !name || hash.length!=32" v-on:click="create_contract">Create Contract</button>
