@@ -22,10 +22,12 @@
         <strong>Drag one or more files to this Drop Zone ...</strong>
       </div>
 
-
-      <input v-model="hash" placeholder="Enter Hash">
-      <input v-model="name" placeholder="Enter Name">
-      <button :disabled="!hash || !name || hash.length!=32" v-on:click="create_contract">Create Contract</button>
+      <div v-if="name">Name of your file is {{ name }} </div>
+      <div v-if="type">Type of file is {{ type }} </div>
+      <div v-if="size">Size of  file is {{ size }} </div>
+      <div v-if="lastModified">File last modified {{ lastModified }} </div>
+      <div v-if="hash">Hash of your file is {{ hash }} </div>
+      <button :disabled="!hash || !name || hash.length!=64" v-on:click="create_contract">Create Contract</button>
     </div>
     <div v-if="animate">
       <p>I am animating!!! Waiting for Blockchain</p>
@@ -34,6 +36,7 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
+  <script src="js/sha256.js"></script>
   <script src="js/nottario.js"></script>
   </body>
 </html>

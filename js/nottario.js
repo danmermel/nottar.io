@@ -56,6 +56,9 @@ var app = new Vue({
   data: {
     hash:"",
     name:"",
+    lastModified:"",
+    size:"",
+    type:"",
     error: "",
     web3Missing: false,
     loggedIn: true,
@@ -78,7 +81,7 @@ var app = new Vue({
       // `this` inside methods points to the Vue instance
       console.log("creating contract, with", web3.eth.accounts[0]);
       var nottarioContract = web3.eth.contract(abi);
-      var nottario =nottarioContract.new( this.hash, this.name, {from:web3.eth.accounts[0], data: bin, gas: 3000000, value: 1000000}, function(err,data) {
+      var nottario =nottarioContract.new( "0x"+this.hash, this.name, {from:web3.eth.accounts[0], data: bin, gas: 3000000, value: 1000000}, function(err,data) {
         console.log(err, data);
         if (err)  {
           app.error = err;
@@ -104,11 +107,18 @@ function drop_handler(ev) {
   ev.preventDefault();
 
   var f = ev.dataTransfer.files[0];
-
+  console.log ("the file is" , f);
+  app.lastModified = f.lastModified;
+  app.name = f.name;
+  app.size = f.size;
+  app.type = f.type;
   var reader = new FileReader();
   reader.onload = function(event) {
     //console.log('onload!',event);
-    console.log(event.target.result)
+    app.hash = sha3_256(event.target.result);
+    console.log("hash is " + app.hash);
+    
+    
 
   };
   reader.readAsText(f);

@@ -18,10 +18,16 @@
       <p>Committed to the Blockchain on {{ timestamp }}</p>
     </div>
 
+    <div id="drop_zone" ondrop="verify_file(event);" ondragover="allowDrop(event)">
+      <strong>Drag a file to this Drop Zone to verify ...</strong>
+    </div>
+    <div v-if="verified">VERIFIED!!</div>
+
   </div>
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
+  <script src="js/sha256.js"></script>
   <script src="js/contract.js"></script>
   </body>
 </html>

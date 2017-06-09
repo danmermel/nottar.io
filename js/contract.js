@@ -71,7 +71,8 @@ var app = new Vue({
     name:"",
     address:"",
     timestamp:"",
-    error: ""
+    error: "",
+    verified:false
   },
   mounted:function(){
     setTimeout(this.read_contract,1000)
@@ -88,7 +89,7 @@ var app = new Vue({
         var contract  = web3.eth.contract(abi).at(address);
         contract.hash(function(err,data){
           console.log(err,data);
-          app.hash = hextoascii(data);
+          app.hash = data.replace(/^0x/,"");
         });
         contract.name(function(err,data){
           console.log(err,data);
@@ -110,6 +111,32 @@ var app = new Vue({
   }
 })
 
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function verify_file(ev) {
+  console.log("Verifying");
+  ev.preventDefault();
+
+  var f = ev.dataTransfer.files[0];
+  console.log ("the file is" , f);
+  var reader = new FileReader();
+  reader.onload = function(event) {
+    //console.log('onload!',event);
+    var hash = sha3_256(event.target.result);
+    console.log("new hash is " + hash);
+    if (hash == app.hash){
+      app.verified = true;
+   } else {
+     app.verified= false;
+   }
+    
+    
+
+  };
+  reader.readAsText(f);
+}
 
 
 
