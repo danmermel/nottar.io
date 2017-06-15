@@ -9,7 +9,8 @@ var app = new Vue({
     error: "",
     web3Missing: false,
     loggedIn: true,
-    animate: false
+    animate: false,
+    upload_visible: false
   },
   mounted:function(){
    setTimeout(function() {
@@ -24,6 +25,19 @@ var app = new Vue({
     },1000)
   },
   methods: {
+    display_upload: function() {
+      app.upload_visible = true;
+    },
+    cancel_upload: function() {
+      app.upload_visible = false;
+      app.hash = "";
+      app.name = "";
+      app.lastModified = "";
+      app.size = "";
+      app.type = "";
+      app.error =  "";
+      app.animate = false
+   },
     create_contract: function () {
       // `this` inside methods points to the Vue instance
       console.log("creating contract, with", web3.eth.accounts[0]);
