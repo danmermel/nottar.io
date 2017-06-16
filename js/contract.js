@@ -17,6 +17,9 @@ var app = new Vue({
   data: {
     hash:"",
     name:"",
+    type:"",
+    size: "",
+    lastModified: "",
     address:"",
     timestamp:"",
     error: "",
@@ -50,7 +53,20 @@ var app = new Vue({
 
           console.log('timestamp', data, typeof data);
         });
-
+      
+        contract.mime_type(function(err,data){
+          console.log(err,data);
+          app.type = hextoascii(data);
+        });
+        contract.size(function(err,data){
+          console.log('size',err,data);
+          app.size = parseInt(data.toString());
+        });
+        contract.file_timestamp(function(err,data){
+          console.log('lastmodified',err,data);
+          var ts = parseInt(data.toString());
+          app.lastModified = new Date(ts).toString();
+        });
 
       } else {
         app.error = "Missing contract address";

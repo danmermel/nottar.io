@@ -41,6 +41,7 @@ var app = new Vue({
     create_contract: function () {
       // `this` inside methods points to the Vue instance
       console.log("creating contract, with", web3.eth.accounts[0]);
+      this.name = this.name.substr(0,32);
       var nottarioContract = web3.eth.contract(abi);
       var nottario =nottarioContract.new( "0x"+this.hash, this.name, this.type, this.size, this.lastModified, {from:web3.eth.accounts[0], data: bin, gas: 500000, value: 10000000000000000}, function(err,data) {
         console.log(err, data);
