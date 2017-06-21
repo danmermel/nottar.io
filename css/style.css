@@ -11,3 +11,16 @@
 .buttonspace {
   margin-top: 20px
 }
+
+.wrapper {
+	border: 7px dotted #000;
+	box-shadow: inset 0 -3px 0 0 #000, 0 3px 0 0 #000;
+}
+
+.certificate-title {
+   text-align:center;
+}
+
+.dragging {
+  background-color: red;
+}

@@ -45,7 +45,7 @@ var app = new Vue({
 
       console.log("creating contract, with", web3.eth.accounts[0]);
       var nottarioContract = web3.eth.contract(abi);
-      var nottario =nottarioContract.new( "0x"+this.hash, this.name, this.type, this.size, this.lastModified, {from:web3.eth.accounts[0], data: bin, gas: 500000, value: 10000000000000000}, function(err,data) {
+      var nottario =nottarioContract.new( this.hash, this.name, this.type, this.size, this.lastModified, {from:web3.eth.accounts[0], data: bin, gas: 500000, value: 10000000000000000}, function(err,data) {
         console.log(err, data);
         if (err)  {
           app.error = err;
@@ -80,7 +80,7 @@ function drop_handler(ev) {
   var reader = new FileReader();
   reader.onload = function(event) {
     //console.log('onload!',event);
-    app.hash = sha3_256(event.target.result);
+    app.hash = web3.sha3(event.target.result);
     console.log("hash is " + app.hash);
     
     

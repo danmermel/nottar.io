@@ -23,13 +23,24 @@ var app = new Vue({
     address:"",
     timestamp:"",
     error: "",
-    verified:false
+    web3Missing: false,
+    verified:false,
+    droppedHash: "",
+    dragging: false
   },
-  mounted:function(){
-    setTimeout(this.read_contract,1000)
+ mounted:function(){
+   setTimeout(function() {
+      //console.log('here', web3.eth.accounts, web3.eth.accounts.length);
+      if (typeof web3 === 'undefined') {
+        app.web3Missing = true;
+      } else {
+        app.read_contract();
+      }
+       
+   }, 1000);   
   },
 
-  methods: {
+ methods: {
     read_contract: function () {
       // `this` inside methods points to the Vue instance
 
@@ -40,7 +51,7 @@ var app = new Vue({
         var contract  = web3.eth.contract(abi).at(address);
         contract.hash(function(err,data){
           console.log(err,data);
-          app.hash = data.replace(/^0x/,"");
+          app.hash =  data;
         });
         contract.name(function(err,data){
           console.log(err,data);
@@ -76,21 +87,28 @@ var app = new Vue({
 })
 
 function allowDrop(ev) {
-    ev.preventDefault();
+  ev.preventDefault();
+  app.dragging=true;
+}
+
+function dragout(ev) {
+  console.log('drag out');
+  app.dragging=false;
 }
 
 function verify_file(ev) {
   console.log("Verifying");
   ev.preventDefault();
-
+  app.dragging=false;
   var f = ev.dataTransfer.files[0];
   console.log ("the file is" , f);
   var reader = new FileReader();
   reader.onload = function(event) {
     //console.log('onload!',event);
-    var hash = sha3_256(event.target.result);
-    console.log("new hash is " + hash);
-    if (hash == app.hash){
+    app.droppedHash = web3.sha3(event.target.result);
+    console.log("new hash is ", app.droppedHash);
+    console.log("old hash is ", app.hash);
+    if (app.droppedHash == app.hash){
       app.verified = true;
    } else {
      app.verified= false;
