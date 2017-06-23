@@ -77,7 +77,7 @@
                  <h2>Drag and drop a file into the dropzone</h2>
                  <hr class="star-light">
                </div> 
-               <div v-if="!hash" id="drop_zone" ondrop="drop_handler(event);" ondragover="allowDrop(event)">
+               <div v-bind:class="{ dragging: dragging }" v-if="!hash" id="drop_zone" ondrop="drop_handler(event);" ondragover="allowDrop(event)" ondragleave="dragout(event)">
                  <strong>Drop Zone ...</strong>
                </div>
 
@@ -112,14 +112,48 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-lg-offset-2">
-                    <p>Nottar.io allows you to notarise documents using the Ethereum blockchain. Simply drag and drop a documents
-                       on to the page we will create an Ethereum smart contract to prove that your document existed at this time.
-                    </p>
-                </div>
-                <div class="col-lg-4">
-                    <p>Whether you're looking to prove that a work of art was your idea, to record your will or anything else, Nottar.io
-                       can be your notary for a fraction of the cost of a human.
+                <div class="col-lg-12">
+                    <p><strong><i>Notarise</i></strong> v. to be witness of the authenticity of a document and its accompanying signatures in one's capacity as notary public</p>
+                    <p>Nottar.io is a service that allows you to notarise documents using the Ethereum blockchain. </p>
+                    <p>In the past, if you wanted to prove that you have a certain document at a certain point in time, you might take it to a notary public who will, for a fee, be witness to that fact. [Here are some fees, out of interest: http://www.premiersolicitors.co.uk/Legalisation,11332,10160,11328,0.html £60 per doc, or £250 per hour!!!]</p>
+		    <p>Today, the blockchain can do that for you without involving a notary public or solicitor and for a much smaller fee.</p>
+                    <h3> How?</h3> 
+                    <h4>Identity</h4> 
+                    <p>Any electronic document (Word, Excel, PDF, jpg or anything else) has a unique cryptographic "fingerprint" or hash. it is unique to that document and that document only. If you make even the tiniest change to the document (remove a comma in a contract, for example), the new document's hash will be completely different. By hashing your document you are obtaining a unique identifier for it, without actually revealing any information about the document itself.</p>
+                    <h4>Timestamp</h4>
+ 
+By submitting your document's hash in a Smart Contract to the Ethereum blockchain (the hash, remember, NOT the document itself), you are obtaining an unforgeable timestamp for your action, because every block in the blockchain has a timestamp and that timestamp cannot be altered. 
+ 
+(See, for example, this block's timestamp.....)
+ 
+The combination of those to things (the hash in the Smart Contract and the timestamp) means that you can point to a document in your possession and to the smart contract on the Blockchain, and assert that you have had that document since at least that particular point in time.
+ 
+Furthermore, because the data in the blockchain is readable and publicly accessible, anyone can verify your claim. They can read the Smart Contract, extract the hash and compare it to the hash of the document in your possession. If the two hashes are the same, the two documents must be the same.
+ 
+What is the use of all of this?
+ 
+There are plenty of real-world uses:
+You make a work of art (a drawing or a poem). If you register it on the blockchain, you can prove that you had that creation at a given point. This will strengthen your case in any future intellectual property disputes.
+You draw up a will. If you register it on the Blockchain, your heirs will know whether they are dealing with the will you wrote and not another (forged?) copy.
+You draw up a contract with someone else. You both sign it and then it gets registered on the Blockchain. Everyone will be able to know whether or not they are looking at the canonical version of that contract by comparing the registered hash with the hash of the document in their possession. 
+ 
+How much will it cost me?
+The cost is two-fold:
+We charge 0.01 ETH for submitting the contract to the blockchain
+There is a blockchain network fee for the contract to be added to a block, which can vary but it is around 0.01 ETH
+ 
+So the total cost will be around 0.02 ETH. For the current ETH-->USD rate have a look here
+ 
+I like it! What do I do?
+You need to have the Metamask browser plugin or the Mist Browser installed
+You need to have some ETH to pay for the transaction. You can get some here or here
+Once you have the above, simply drag and drop your document into the dropzone. Remember, your document stays with you. ONLY the hash gets uploaded to the public internet. Nottario does not even copy your document to its servers because the hash calculation is performed by your browser on your machine. Your document never leaves your computer.
+Then click on Create and follow the Metamask instructions.
+Remmeber: Wait until the transaction has been processed!! This can take up to a minute. You will be redirected to a page with a URL like this 
+http://windermere:8001/contract.html#0x39ca3a6b71fa759c650c7f2e07acf7e6d0cbb0db
+This is your contract page and you can always come back to it.
+The big long number is your Smart Contract address. Keep a note of it. Even if we go out of business you will always be able to access the smart contract at 
+https://ropsten.etherscan.io/address/0x39ca3a6b71fa759c650c7f2e07acf7e6d0cbb0db
                     </p>
                 </div>
             </div>

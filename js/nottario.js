@@ -10,7 +10,8 @@ var app = new Vue({
     tx: "",
     web3Missing: false,
     animate: false,
-    upload_visible: false
+    upload_visible: false,
+    dragging: false
   },
   mounted:function(){
    setTimeout(function() {
@@ -64,13 +65,19 @@ var app = new Vue({
 })
 
 function allowDrop(ev) {
-    ev.preventDefault();
+  ev.preventDefault();
+  app.dragging = true;
+}
+
+function dragout(ev) {
+  console.log('drag out');
+  app.dragging=false;
 }
 
 function drop_handler(ev) {
   console.log("Drop");
   ev.preventDefault();
-
+  app.dragging=false;
   var f = ev.dataTransfer.files[0];
   console.log ("the file is" , f);
   app.lastModified = f.lastModified;
