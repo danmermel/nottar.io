@@ -105,50 +105,27 @@
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p><strong><i>Notarise</i></strong> v. to be witness of the authenticity of a document and its accompanying signatures in one's capacity as notary public</p>
-                    <p><strong>Nottar.io</strong> is a service that allows you to notarise documents using the Ethereum blockchain.</p>
-                    
-                    <h3>WHAT?</h3>
-                    <p>In the past, if you wanted to prove that you had a certain document at a certain point in time, you might take it to a notary public who would, for a fee, be witness to that fact. And the fees were (and are!) significant.</p>
-                    <p>Today, the blockchain can do that for you without involving a notary public or solicitor and for a much smaller fee.</p>
-                    
-                    <h3> How?</h3> 
-                    <h4>Identity</h4> 
-                    <p>Any electronic document (Word, Excel, PDF, jpg or anything else) has a unique cryptographic "fingerprint" or hash. it is unique to that document and that document only. If you make even the tiniest change to the document (remove a comma in a contract, for example), the new document's hash will be completely different. By hashing your document you are obtaining a unique identifier for it, without actually revealing any information about the document itself.</p>
-                    <h4>Timestamp</h4>
-                    <p>By submitting your document's hash in a Smart Contract to the Ethereum blockchain (the hash, remember, NOT the document itself), you are obtaining an unforgeable timestamp for your action, because every block in the blockchain has a timestamp and that timestamp cannot be altered.  (See, for example, this block's timestamp.....)</p>
-                    <p>The combination of those to things (the hash in the Smart Contract and the timestamp) means that you can point to a document in your possession and to the smart contract on the Blockchain, and assert that you have had that document since at least that particular point in time.</p>
-                    <p>And, because the data in the blockchain is readable and publicly accessible, anyone can verify your claim. They can read the Smart Contract, extract the hash and compare it to the hash of the document in your possession. If the two hashes are the same, the two documents must be the same.
-                    
-                    <h3>So what?</h3>
-                    <p>There are plenty of real-world uses for this tech:
-                    <ol>
-                    <li>You make a work of art (a drawing or a poem). If you register it on the blockchain, you can prove that you had that creation at a given point. This will strengthen your case in any future intellectual property disputes.</li>
-                    <li>You draw up a will. If you register it on the Blockchain, your heirs will know whether they are dealing with the will you wrote and not another (forged?) copy.</li>
-                    <li>You draw up a contract with someone else. You both sign it and then it gets registered on the blockchain. Everyone will be able to know whether or not they are looking at the canonical version of that contract by comparing the registered hash with the hash of the document in their possession. </li>
-                    </ol>
-                    </p>
-                    
-                    <h3>How much does it cost?</h3>
-					<p>The cost is two-fold:</p>
-					<ol>
-					<li>We charge 0.01 ETH for submitting the contract to the blockchain</li>
-					<li>There is a blockchain network fee for the contract to be added to a block, which can vary but it is around 0.01 ETH</li></ol>
- 					<p>So the total cost will be around 0.02 ETH. For the current ETH-->USD rate have a look here</p>
-
- 					<h3>I like it! What do I do?</h3>
- 					<p>You need to have the Metamask browser plugin or the Mist Browser installed</p>
- 					<p>You need to have some ETH to pay for the transaction. You can get some here or here</p>
- 					<p>Once you have the above, click the button below and simply drag and drop your document into the dropzone. Remember, <strong>your document stays with you</strong>. ONLY the hash gets uploaded to the public internet. Nottario does not even copy your document to its servers because the hash calculation is performed by your browser on your machine. Your document never leaves your computer.</p>
- 					<p>Then click on Create and follow the Metamask instructions.</p>
-					<p><strong>Remmeber:</strong>Wait until the transaction has been processed! This can take up to a minute. You will be redirected to a page with a web URL like this http://nottar.io/contract.html#0x39ca3a6b71fa759c650c7f2e07acf7e6d0cbb0db . This is your certificate page and you can always come back to it.</p>
-					<p>The last bit of that web URL is the address of your Smart Contract on the blockchain. Keep a note of it. Even if we go out of business you will always be able to access the smart contract at https://etherscan.io/address/##your_address_here##</p>
+            <div class="row text-center">
+                <div class="col-lg-4">
+                    <i class="fa fa-file-text-o fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-right fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-key fa-5x icon-padding" aria-hidden="true"></i>
+                    <p><strong><i>1. Turn your document into a hash</i></strong> </p>
+                </div>
+                <div class="col-lg-4">
+                    <i class="fa fa-key fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-cloud-upload fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-file-text fa-5x icon-padding" aria-hidden="true"></i>
+                    <p><strong><i>2. Upload the hash to the Ethereum Blockchain</i></strong> </p>
+                </div>
+                <div class="col-lg-4">
+                    <i class="fa fa-certificate fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-check fa-5x icon-padding" aria-hidden="true"></i>
+                    <p><strong><i>3. Keep your Notarisation Certificate!</i></strong> </p>
                 </div>
             </div>
-            <div class="text-center">
-              <button type="button" class="btn btn-primary btn-lg buttonspace" v-on:click="display_upload">Nottarise now!</button>
+            <div class="row text-center">
+              <a class ="skills" href="about.html"><p>Find out more</p></a>
             </div>
 
         </div>

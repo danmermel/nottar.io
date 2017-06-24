@@ -24,3 +24,8 @@
 .dragging {
   background-color: red;
 }
+
+.icon-padding {
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
