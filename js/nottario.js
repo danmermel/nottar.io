@@ -1,6 +1,7 @@
 var app = new Vue({
   el: '#app',
   data: {
+    etherscanLink:"",
     hash:"",
     name:"",
     lastModified:"",
@@ -56,6 +57,7 @@ var app = new Vue({
           } else {
             app.tx = data.transactionHash;
             app.animate = true;
+            app.etherscanLink = "https://etherscan.io/tx/" + app.tx;
           }
         }
       });

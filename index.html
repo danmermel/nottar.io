@@ -65,7 +65,7 @@
         </div>
     </header>
    
-    <section id = "upload" v-if="upload_visible">
+    <section id = "upload" v-if="upload_visible" v-cloak>
        <div class="container">
          <div class="row">
            <div class="col-lg-12 text-center">
@@ -95,7 +95,8 @@
              </div>
              <div v-if="animate">
                <p><img src="img/animation.gif" /></p>
-               <p>Tx {{ tx }}</p>
+               <p> Please wait for the contract to be stored in the Ethereum blockchain</p> 
+               <p><a v-bind:href="etherscanLink" target="_new">Blockchain transaction {{ tx }}</a></p>
              </div>
            </div>
          </div>
@@ -114,11 +115,12 @@
                 </div>
                 <div class="col-lg-4">
                     <i class="fa fa-key fa-5x icon-padding" aria-hidden="true"></i>
-                    <i class="fa fa-cloud-upload fa-5x icon-padding" aria-hidden="true"></i>
-                    <i class="fa fa-file-text fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-arrow-right fa-5x icon-padding" aria-hidden="true"></i>
+                    <i class="fa fa-chain fa-5x icon-padding" aria-hidden="true"></i>
                     <p><strong><i>2. Upload the hash to the Ethereum Blockchain</i></strong> </p>
                 </div>
                 <div class="col-lg-4">
+                    <i class="fa fa-chain fa-5x icon-padding" aria-hidden="true"></i>
                     <i class="fa fa-certificate fa-5x icon-padding" aria-hidden="true"></i>
                     <i class="fa fa-check fa-5x icon-padding" aria-hidden="true"></i>
                     <p><strong><i>3. Keep your Notarisation Certificate!</i></strong> </p>

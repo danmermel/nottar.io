@@ -15,6 +15,7 @@ function hextoascii(str1) {
 var app = new Vue({
   el: '#app',
   data: {
+    etherscanLink:"",
     hash:"",
     name:"",
     type:"",
@@ -47,7 +48,8 @@ var app = new Vue({
       console.log("in read function");
       if (window.location.hash && window.location.hash !== '#') {
         var address = window.location.hash.replace(/^#/,'');
-
+        app.address = address;
+        app.etherscanLink = "https://etherscan.io/address/" + address;
         var contract  = web3.eth.contract(abi).at(address);
         contract.hash(function(err,data){
           console.log(err,data);
