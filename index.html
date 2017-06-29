@@ -99,23 +99,27 @@
              <div v-bind:class="{ dragging: dragging }" v-if="!hash" id="drop_zone" ondrop="drop_handler(event);" ondragover="allowDrop(event)" ondragleave="dragout(event)">
                <strong>Drop Zone ...</strong>
              </div>
-
-             <table v-if="hash" class="table">
-               <tr><th>Name</th><td>{{ name }}<span v-if="name.length==32">...</span></td></tr>
-               <tr><th>File type</th><td>{{ type }}<span v-if="name.length==32">...</span></td></tr>
-               <tr><th>Size</th><td>{{ size }} bytes</td></tr>
-               <tr><th>Last modified</th><td>{{ lastModified }}</td></tr>
-               <tr><th>Hash</th><td>{{ hash }}</td></tr>
-             </table>
+             <div v-if="hash"> 
+               <h2>File Details</h2>
+               <hr class="star-light">
+               <table class="table">
+                 <tr><th>Name</th><td>{{ name }}<span v-if="name.length==32">...</span></td></tr>
+                 <tr><th>File type</th><td>{{ type }}<span v-if="name.length==32">...</span></td></tr>
+                 <tr><th>Size</th><td>{{ size }} bytes</td></tr>
+                 <tr><th>Last modified</th><td>{{ lastModified }}</td></tr>
+                 <tr><th>Hash</th><td>{{ hash }}</td></tr>
+               </table>
+             </div>
              <div class="buttonspace" v-if="!animate">
                <button type="button" class="btn btn-primary btn-lg" :disabled="!hash || !name || hash.length!=66" v-on:click="create_contract">Create Contract</button>
                <button type="button" class="btn btn-danger btn-lg"  v-on:click="cancel_upload">Cancel</button>
              </div>
            </div>
            <div v-if="animate">
-             <p><img src="img/animation.gif" /></p>
-             <p> Please wait for the contract to be stored in the Ethereum blockchain</p> 
+             <p v-if="!error"><img src="img/animation.gif" /></p>
+             <p v-if="!error"> Please wait for the contract to be stored in the Ethereum blockchain</p> 
              <p><a v-bind:href="etherscanLink" target="_new">Blockchain transaction {{ tx }}</a></p>
+             <p v-if="error">An error has occured. The error is "{{ error }}".</p>
            </div>
          </div>
        </div>

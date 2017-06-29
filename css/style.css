@@ -33,3 +33,14 @@
 [v-cloak] {
   display: none;
 }
+
+.verified {
+       margin-top: 20px;
+       color: green;
+       font-size: 20px;
+}
+.unverified {
+       margin-top: 20px;
+       color: red;
+       font-size: 20px;
+}
