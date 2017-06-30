@@ -119,15 +119,15 @@
             </div>
             <div class="row">
                 <div class="col-lg-4 col-lg-offset-2">
-                    <p>This page shows the contents of your Ethereum smart contract. It shows details of the
-                       document that was notarised and allows any to check whether a document they have 
+                    <p>This page shows the details of the document that has been notarised. 
+                       It also allows anyone to verify whether a document they have 
                        corresponds to the document that was notarised.
                     </p>
                 </div>
                 <div class="col-lg-4">
                     <p>
-                      The long string in the URL is the address of your smart contract on the Ethereum blockchain.
-                      The contract will exist forever and can never be altered.
+                      {{ address }} is the address of your notarisation certificate on the Ethereum blockchain.
+                      The data will exist forever and can never be altered.
                     </p>
                 </div>
             </div>
@@ -146,6 +146,22 @@
                </div>
                <div v-if="verified && droppedHash" class="verified">VERIFIED! The dropped document matches the one submitted to the blockchain!</div>
                <div v-if="!verified && droppedHash" class="unverified">NOT VERIFIED! The dropped document does NOT match the one submitted to the blockchain :-(</div>
+           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blockchain">
+       <div class="container">
+         <div class="row">
+           <div class="col-lg-12 text-center">
+
+               <h3>Ethereum blockchain details</h3>
+               <hr class="star-light">
+               <table class="table">
+                 <tr><th>Address</th><td><a v-bind:href="etherscanLink" target="_new">{{ address }}</a></td></tr>
+                 <tr><th>ABI</th><td><div class="abi">{{ abi }}</div></td></tr>
+               </table>
            </div>
         </div>
       </div>

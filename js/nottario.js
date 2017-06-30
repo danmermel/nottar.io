@@ -24,6 +24,7 @@ var app = new Vue({
   },
   methods: {
     display_upload: function() {
+      window.scrollTo(0,0);
       app.upload_visible = true;
     },
     cancel_upload: function() {

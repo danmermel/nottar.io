@@ -8,6 +8,18 @@
   background-color:#eee
 }
 
+.contacttxt {
+  font-size: 16px;
+}
+
+.abi {
+  text-align:left;
+}
+
+#blockchain {
+  background-color:#eee
+}
+
 .buttonspace {
   margin-top: 20px
 }

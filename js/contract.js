@@ -15,6 +15,7 @@ function hextoascii(str1) {
 var app = new Vue({
   el: '#app',
   data: {
+    abi: "",
     etherscanLink:"",
     hash:"",
     name:"",
@@ -35,6 +36,7 @@ var app = new Vue({
       if (typeof web3 === 'undefined') {
         app.web3Missing = true;
       } else {
+        app.abi = JSON.stringify(abi);
         app.read_contract();
       }
        
