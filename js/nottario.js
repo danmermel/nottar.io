@@ -52,7 +52,13 @@ var app = new Vue({
       var nottario =nottarioContract.new( this.hash, this.name, this.type, this.size, this.lastModified, {from:web3.eth.accounts[0], data: bin, gas: 600000, value: 10000000000000000}, function(err,data) {
         console.log(err, data);
         if (err)  {
-          app.error = err.toString();
+            setInterval(function(){
+              web3.eth.getTransactionReceipt(app.tx , function(err,d){ 
+                if(!err && d.contractAddress) {
+                  window.location = 'contract.html#' + d.contractAddress;
+                }
+              });
+            }, 2000);
         } else {
           if (data.address) {
             window.location = 'contract.html#' + data.address;

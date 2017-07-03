@@ -89,7 +89,7 @@
        <div class="row">
          <div class="col-lg-12 text-center">
            <div v-if="web3Missing">
-             <p>Please install the Metamask Plugin or Mist Browser to use Nottario</p>
+             <p>Please install the<a href="https://metamask.io/" target="_blank">Metamask Plugin</a> or <a href="https://github.com/ethereum/mist" target="_blank">Mist Browser</a> to use Nottario</p>
            </div>
            <div v-if="!web3Missing">
              <div v-if="!hash">
@@ -136,7 +136,7 @@
                   <i class="fa fa-file-text-o fa-5x icon-padding" aria-hidden="true"></i>
                   <i class="fa fa-arrow-right fa-5x icon-padding" aria-hidden="true"></i>
                   <i class="fa fa-slack fa-5x icon-padding" aria-hidden="true"></i>
-                  <p><strong><i>1. We turn your document into a hash</i></strong> </p>
+                  <p><strong><i>1. We turn your document into a cryptographic hash</i></strong> </p>
               </div>
               <div class="col-lg-4">
                   <i class="fa fa-slack fa-5x icon-padding" aria-hidden="true"></i>
@@ -161,6 +161,11 @@
   <footer class="text-center">
       <div class="footer-below">
           <div class="container">
+          <div class="row">
+                  <div class="col-lg-12">
+                      Featured on <a href="https://dapps.ethercasts.com/dapp/nottario"> State of the Dapps</a>
+                  </div>
+              </div>
               <div class="row">
                   <div class="col-lg-12">
                       Copyright &copy; Nottar.io 2017
