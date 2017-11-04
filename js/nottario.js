@@ -9,6 +9,7 @@ var app = new Vue({
     type:"",
     error: "",
     tx: "",
+    profile: null,
     web3Missing: false,
     animate: false,
     upload_visible: false,
@@ -20,9 +21,25 @@ var app = new Vue({
       if (typeof web3 === 'undefined') {
         app.web3Missing = true;
       } 
-   }, 1000);   
+   }, 1000);
+   if (blockstack.isUserSignedIn()) {
+     this.profile = blockstack.loadUserData().profile
+     console.log("Profile is", this.profile)
+   } else if (blockstack.isSignInPending()) {
+     blockstack.handlePendingSignIn().then(function(userData) {
+       window.location = window.location.origin
+     })
+   }
+   
   },
   methods: {
+    login: function() {
+      blockstack.redirectToSignIn()
+    },
+    logout: function() {
+      blockstack.signUserOut(window.location + "?logout")
+    },
+
     display_upload: function() {
       window.scrollTo(0,0);
       app.upload_visible = true;
@@ -109,6 +126,17 @@ function drop_handler(ev) {
   };
   reader.readAsText(f);
 }
+
+function showProfile(profile) {
+  var person = new blockstack.Person(profile)
+  document.getElementById('heading-name').innerHTML = person.name() ? person.name() : "Nameless Person"
+  if(person.avatarUrl()) {
+    document.getElementById('avatar-image').setAttribute('src', person.avatarUrl())
+  }
+  document.getElementById('section-1').style.display = 'none'
+  document.getElementById('section-2').style.display = 'block'
+}
+
 
 
 

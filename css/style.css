@@ -56,3 +56,7 @@
        color: red;
        font-size: 20px;
 }
+
+.icon-size {
+       max-width: 20px;
+}
