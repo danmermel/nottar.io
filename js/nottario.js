@@ -13,6 +13,7 @@ var app = new Vue({
     web3Missing: false,
     animate: false,
     upload_visible: false,
+    blockstack_enabled: false,
     dragging: false
   },
   mounted:function(){
@@ -22,6 +23,14 @@ var app = new Vue({
         app.web3Missing = true;
       } 
    }, 1000);
+
+   $.ajax({  //see if blockstack is there
+     url:"http://localhost:6270/v1/ping"
+   }).done (function(data){
+      console.log("here", data);
+      app.blockstack_enabled=true;
+    });
+
    if (blockstack.isUserSignedIn()) {
      this.profile = blockstack.loadUserData().profile
      console.log("Profile is", this.profile)
@@ -37,7 +46,8 @@ var app = new Vue({
       blockstack.redirectToSignIn()
     },
     logout: function() {
-      blockstack.signUserOut(window.location + "?logout")
+      blockstack.signUserOut(window.location + "?logout");
+      app.profile = null;
     },
 
     display_upload: function() {

@@ -53,13 +53,13 @@
                     <li class="hidden">
                         <a href="#"></a>
                     </li>
-                    <li class="page-scroll" v-if="!profile">
+                    <li class="page-scroll" v-if="blockstack_enabled && !profile">
                         <button type="button" class="btn btn-primary" v-on:click="login">Log In</button>
                     </li>
-                    <li class="page-scroll" v-if="profile">
+                    <li class="page-scroll" v-if="blockstack_enabled && profile">
                       <img :src="profile.image[0].contentUrl" class="img-responsive icon-size"> </img>
                     </li>
-                    <li class="page-scroll" v-if="profile">
+                    <li class="page-scroll" v-if="blockstack_enabled && profile">
                         <button type="button" class="btn btn-primary" v-on:click="logout">Log Out</button>
                     </li>
                     <li class="page-scroll">
