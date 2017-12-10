@@ -10,6 +10,8 @@ var app = new Vue({
     error: "",
     tx: "",
     profile: null,
+    nottarioHistory: null,
+    contractAddress: null,
     web3Missing: false,
     animate: false,
     upload_visible: false,
@@ -29,6 +31,7 @@ var app = new Vue({
    }).done (function(data){
       console.log("here", data);
       app.blockstack_enabled=true;
+      app.viewHistory();
     });
 
    if (blockstack.isUserSignedIn()) {
@@ -42,6 +45,42 @@ var app = new Vue({
    
   },
   methods: {
+    about: function (){
+      window.location.href = "about.html";
+    },
+    contact: function (){
+      window.location.href = "contact.html";
+    },
+    viewHistory: function() {
+      app.loadHistory(function(data) {
+        app.nottarioHistory = data;
+      });   
+    },
+    loadHistory: function(callback) {
+      blockstack.getFile('nottario.json',true).then(function(data) {
+        callback(JSON.parse(data));
+      }).catch(function(err) {
+        callback([]);;
+      });
+    },
+    saveHistory: function(callback) {
+      var obj = {
+        hash: app.hash,
+        name: app.name,
+        type: app.type,
+        timestamp: new Date().getTime(),
+        contractAddress: app.contractAddress
+      };
+      app.loadHistory(function(data) {
+        data.push(obj);
+        blockstack.putFile('nottario.json', JSON.stringify(data), true).then(function() {
+          callback();         
+        }).catch(function(e) {
+          console.log('history write fail', e);
+          callback();
+        });
+      });
+    },
     login: function() {
       blockstack.redirectToSignIn()
     },
@@ -79,18 +118,26 @@ var app = new Vue({
       var nottario =nottarioContract.new( this.hash, this.name, this.type, this.size, this.lastModified, {from:web3.eth.accounts[0], data: bin, gas: 600000, value: 10000000000000000}, function(err,data) {
         console.log(err, data);
         if (err)  {
+           console.log("Error when sending transaction");
+        } else {
+          if (data.address) {
+              //do nothing
+          } else {  //poll for the transaction receipt every 2 secs until you get a contract address
+            app.tx = data.transactionHash;
             setInterval(function(){
-              web3.eth.getTransactionReceipt(app.tx , function(err,d){ 
-                if(!err && d.contractAddress) {
-                  window.location = 'contract.html#' + d.contractAddress;
+              web3.eth.getTransactionReceipt(app.tx , function(err,d){    //while  the tx has not been mined the tx receipt is null
+                if(!err && d != null && d.contractAddress) {   
+                  if (app.blockstack_enabled) {
+                    app.contractAddress = d.contractAddress;
+                    app.saveHistory(function() {
+                      window.location = 'contract.html#' + d.contractAddress;
+                    });
+                  } else {
+                    window.location = 'contract.html#' + d.contractAddress; 
+                  }
                 }
               });
             }, 2000);
-        } else {
-          if (data.address) {
-            window.location = 'contract.html#' + data.address;
-          } else {
-            app.tx = data.transactionHash;
             app.animate = true;
             app.etherscanLink = "https://etherscan.io/tx/" + app.tx;
           }

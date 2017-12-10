@@ -35,15 +35,15 @@
 
 <body id="page-top" class="index">
   <div id ="app">
-    <!-- Navigation -->
-    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
-       <div class="container">
+  <!-- Navigation -->
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+      <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header page-scroll">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                  <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
               </button>
-              <a class="navbar-brand" href="/">Nottar.io</a>
+              <a class="navbar-brand" href="index.html">Nottar.io</a>
           </div>
           <!-- /.navbar-collapse -->
 
@@ -53,18 +53,18 @@
                     <li class="hidden">
                         <a href="#"></a>
                     </li>
-                    <li class="page-scroll">
-                        <a href="about.html">About</a>
+                    <li class="page-scroll" >
+                      <button type="button" class="btn btn-primary" v-on:click="about">About</button>
                     </li>
-                    <li class="page-scroll">
-                        <a href="contact.html">Contact</a>
+                    <li class="page-scroll" >
+                      <button type="button" class="btn btn-primary" v-on:click="contact">Contact</button>
                     </li>
                 </ul>
             </div>
 
       </div>
-        <!-- /.container-fluid -->
-    </nav>
+      <!-- /.container-fluid -->
+  </nav>
 
     <!-- Header -->
     <header>
@@ -88,8 +88,8 @@
              <div v-if="web3Missing">
                <p>Please install the Metamask Plugin or Mist Browser to use Nottario</p>
              </div>
-             <div v-if="!web3Missing">
-               <table  class="table">
+             <div class="alert alert-cert" v-if="!web3Missing">
+               <table  class="table table-striped">
                  <tr><th>Address</th><td><a v-bind:href="etherscanLink" target="_new">{{ address }}</a></td></tr>
                  <tr><th>Name</th><td>{{ name }}<span v-if="name.length==32">...</span></td></tr>
                  <tr><th>File type</th><td>{{ type }}<span v-if="name.length==32">...</span></td></tr>

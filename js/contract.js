@@ -44,6 +44,12 @@ var app = new Vue({
   },
 
  methods: {
+    about: function (){
+      window.location.href = "about.html";
+    },
+    contact: function (){
+      window.location.href = "contact.html";
+    },
     read_contract: function () {
       // `this` inside methods points to the Vue instance
 

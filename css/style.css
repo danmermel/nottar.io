@@ -60,3 +60,7 @@
 .icon-size {
        max-width: 20px;
 }
+
+.alert-cert {
+	border: 2px solid #18BC9C;
+}
