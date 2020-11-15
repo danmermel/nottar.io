@@ -155,7 +155,9 @@
              <p v-if="!error"> Please wait for the contract to be stored in the Ethereum blockchain. 
                This could take up to a minute. When it is done, you will be redirected to your
                notarisation certificate.</p> 
-             <p><a v-bind:href="etherscanLink" target="_new">Blockchain transaction {{ tx }}</a></p>
+	     <p v-for="item in status">
+               {{ item }}
+	     </p>
              <p v-if="error">An error has occured. The error is "{{ error }}".</p>
            </div>
          </div>

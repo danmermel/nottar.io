@@ -19,7 +19,8 @@ var app = new Vue({
     animate: false,
     upload_visible: false,
     blockstack_enabled: false,
-    dragging: false
+    dragging: false, 
+    status: []
   },
   mounted: function () {
     setTimeout(function () {
@@ -110,23 +111,33 @@ var app = new Vue({
     create_contract: async function () {
       // `this` inside methods points to the Vue instance
       var accounts = await web3.eth.getAccounts()
-
+      console.log('accounts', accounts)
       if (accounts.length === 0) {
         alert("No Ethereum account found - please log into MetaMask");
         return;
       }
       app.error = "";
-
+      app.animate = true
       console.log("creating contract, with", accounts[0]);
+      console.log('arguements', [this.hash, this.name, this.type, this.size, this.lastModified])
       var nottarioContract = new web3.eth.Contract(abi);
+      var address = ''
       var nottario = await nottarioContract.deploy({
         data: bin,
-        arguments:[this.hash, this.name, this.type, this.size, this.lastModified] 
+        arguments:[this.hash, web3.utils.utf8ToHex(this.name), web3.utils.utf8ToHex(this.type), this.size, this.lastModified] 
       	}).send({
           from: accounts[0], gas: 600000, value: 10000000000000000
-        })
+        }).once('sending', function(payload){ console.log('sending', payload); app.status.push('sending transaction')
+ })
+          .once('sent', function(payload){ console.log('sent', payload); app.status.push('sent transaction') })
+          .once('transactionHash', function(hash){ console.log('tx hash', hash); app.status.push('hash ' + hash)})
+          .once('receipt', function(receipt){console.log('receipt', receipt); address = receipt.contractAddress; app.status.push('receipt ' + receipt.contractAddress) })
+          .on('confirmation', function(confNumber, receipt, latestBlockHash){ console.log('confirmation', confNumber, receipt, latestBlockHash); app.status.push('confirmed') })
+          .on('error', function(error){ console.log('error', error); app.error = error })
 
       console.log("The contract is ", nottario)
+      window.location = 'contract.html#' + address;
+
       /*
                 if (data.address) {
                     //do nothing

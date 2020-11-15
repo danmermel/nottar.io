@@ -33,7 +33,7 @@ var app = new Vue({
  mounted:function(){
    setTimeout(function() {
       //console.log('here', web3.eth.accounts, web3.eth.accounts.length);
-      if (typeof web3 === 'undefined') {
+      if (typeof window.ethereum === 'undefined') {
         app.web3Missing = true;
       } else {
         app.abi = JSON.stringify(abi);
@@ -58,7 +58,7 @@ var app = new Vue({
         var address = window.location.hash.replace(/^#/,'');
         app.address = address;
         app.etherscanLink = "https://etherscan.io/address/" + address;
-        var contract  = web3.eth.contract(abi).at(address);
+        var contract  = new web3.eth.Contract(abi, address);
         contract.hash(function(err,data){
           console.log(err,data);
           app.hash =  data;
