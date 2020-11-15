@@ -1,3 +1,11 @@
+.ropsten {
+  padding: 5px;
+  background-color: red;
+  color: white;
+  font-size: 14px;
+  border:2px solid black;
+  margin: 5px
+}
 #drop_zone {
   border: 5px dashed black;
   width:  100%;

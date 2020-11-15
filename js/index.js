@@ -4,6 +4,7 @@ var web3= new Web3(Web3.givenProvider)
 var app = new Vue({
   el: '#app',
   data: {
+    ropsten: false,
     etherscanLink: "",
     hash: "",
     name: "",
@@ -20,11 +21,14 @@ var app = new Vue({
     status: []
   },
   mounted: function () {
-    setTimeout(function () {
+    setInterval(async function () {
       //console.log('here', web3.eth.accounts, web3.eth.accounts.length);
       if (typeof window.ethereum === 'undefined') {
         app.web3Missing = true;
       }
+      // check user's MetaMask is connected to the main network, otherwise display warning
+      const netId = await web3.eth.net.getId()
+      app.ropsten = (netId !== 1)
     }, 1000);
 
   },

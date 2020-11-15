@@ -98,6 +98,10 @@
                <h2>Drag and drop a file into the dropzone</h2>
                <hr class="star-light">
              </div> 
+             <div class="ropsten" v-if="ropsten">
+               You are currently not using the main Ethereum network. Any notarisation data will NOT be permanent.
+               Please switch to the main Ethereum network in MetaMask before proceeding.
+             </div>
              <div v-bind:class="{ dragging: dragging }" v-if="!hash" id="drop_zone" ondrop="drop_handler(event);" ondragover="allowDrop(event)" ondragleave="dragout(event)">
                <strong>Drop Zone ...</strong>
              </div>
