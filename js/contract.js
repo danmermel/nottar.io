@@ -1,3 +1,5 @@
+var web3= new Web3(Web3.givenProvider)
+
 function hextoascii(str1) {  
   var hex  = str1.toString().replace(/0x/,'');  
   var str = '';  

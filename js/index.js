@@ -12,13 +12,10 @@ var app = new Vue({
     type: "",
     error: "",
     tx: "",
-    profile: null,
-    nottarioHistory: null,
     contractAddress: null,
     web3Missing: false,
     animate: false,
     upload_visible: false,
-    blockstack_enabled: false,
     dragging: false, 
     status: []
   },
@@ -30,23 +27,6 @@ var app = new Vue({
       }
     }, 1000);
 
-    $.ajax({  //see if blockstack is there
-      url: "http://localhost:6270/v1/ping"
-    }).done(function (data) {
-      console.log("here", data);
-      app.blockstack_enabled = true;
-      app.viewHistory();
-    });
-
-    if (blockstack.isUserSignedIn()) {
-      this.profile = blockstack.loadUserData().profile
-      console.log("Profile is", this.profile)
-    } else if (blockstack.isSignInPending()) {
-      blockstack.handlePendingSignIn().then(function (userData) {
-        window.location = window.location.origin
-      })
-    }
-
   },
   methods: {
     about: function () {
@@ -55,44 +35,6 @@ var app = new Vue({
     contact: function () {
       window.location.href = "contact.html";
     },
-    viewHistory: function () {
-      app.loadHistory(function (data) {
-        app.nottarioHistory = data;
-      });
-    },
-    loadHistory: function (callback) {
-      blockstack.getFile('nottario.json', true).then(function (data) {
-        callback(JSON.parse(data));
-      }).catch(function (err) {
-        callback([]);;
-      });
-    },
-    saveHistory: function (callback) {
-      var obj = {
-        hash: app.hash,
-        name: app.name,
-        type: app.type,
-        timestamp: new Date().getTime(),
-        contractAddress: app.contractAddress
-      };
-      app.loadHistory(function (data) {
-        data.push(obj);
-        blockstack.putFile('nottario.json', JSON.stringify(data), true).then(function () {
-          callback();
-        }).catch(function (e) {
-          console.log('history write fail', e);
-          callback();
-        });
-      });
-    },
-    login: function () {
-      blockstack.redirectToSignIn()
-    },
-    logout: function () {
-      blockstack.signUserOut(window.location + "?logout");
-      app.profile = null;
-    },
-
     display_upload: function () {
       window.scrollTo(0, 0);
       app.upload_visible = true;
@@ -129,7 +71,7 @@ var app = new Vue({
           from: accounts[0], gas: 600000, value: 10000000000000000
         }).once('sending', function(payload){ console.log('sending', payload); app.status.push('sending transaction')
  })
-          .once('sent', function(payload){ console.log('sent', payload); app.status.push('sent transaction') })
+          .once('sent', function(payload){ console.log('sent', payload); })
           .once('transactionHash', function(hash){ console.log('tx hash', hash); app.status.push('hash ' + hash)})
           .once('receipt', function(receipt){console.log('receipt', receipt); address = receipt.contractAddress; app.status.push('receipt ' + receipt.contractAddress) })
           .on('confirmation', function(confNumber, receipt, latestBlockHash){ console.log('confirmation', confNumber, receipt, latestBlockHash); app.status.push('confirmed') })
@@ -137,34 +79,6 @@ var app = new Vue({
 
       console.log("The contract is ", nottario)
       window.location = 'contract.html#' + address;
-
-      /*
-                if (data.address) {
-                    //do nothing
-                } else {  //poll for the transaction receipt every 2 secs until you get a contract address
-                  app.tx = data.transactionHash;
-                  setInterval(function(){
-                    web3.eth.getTransactionReceipt(app.tx , function(err,d){    //while  the tx has not been mined the tx receipt is null
-                      if(!err && d != null && d.contractAddress) {   
-                        if (app.blockstack_enabled) {
-                          app.contractAddress = d.contractAddress;
-                          app.saveHistory(function() {
-                            window.location = 'contract.html#' + d.contractAddress;
-                          });
-                        } else {
-                          window.location = 'contract.html#' + d.contractAddress; 
-                        }  //else
-                      } //if
-                    });  //web3 get Transaction
-                  }, 2000);  // set Interval
-                  app.animate = true;
-                  app.etherscanLink = "https://etherscan.io/tx/" + app.tx;
-                } //else
-
-    }
-  });
-        // `event` is the native DOM event
-*/
       }
       
   }
@@ -199,20 +113,8 @@ function drop_handler(ev) {
     //console.log('onload!',event);
     app.hash = web3.utils.sha3(event.target.result);
     console.log("hash is " + app.hash);
-
-
-
   };
   reader.readAsText(f);
 }
 
-function showProfile(profile) {
-  var person = new blockstack.Person(profile)
-  document.getElementById('heading-name').innerHTML = person.name() ? person.name() : "Nameless Person"
-  if (person.avatarUrl()) {
-    document.getElementById('avatar-image').setAttribute('src', person.avatarUrl())
-  }
-  document.getElementById('section-1').style.display = 'none'
-  document.getElementById('section-2').style.display = 'block'
-}
 

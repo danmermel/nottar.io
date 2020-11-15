@@ -53,18 +53,6 @@
                     <li class="hidden">
                         <a href="#"></a>
                     </li>
-                    <li class="page-scroll" v-if="blockstack_enabled && !profile">
-                        <button type="button" class="btn btn-primary" v-on:click="login">Log In</button>
-                    </li>
-                    <li class="page-scroll" v-if="blockstack_enabled && profile && profile.image">
-                     <button type="button" class="btn btn-primary" v-on:click="viewHistory"><img :src="profile.image[0].contentUrl" class="img-responsive icon-size"> </img></button>
-                    </li>
-                    <li class="page-scroll" v-if="blockstack_enabled && profile && !profile.image">
-                     <button type="button" class="btn btn-primary" v-on:click="viewHistory"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></button>
-                    </li>
-                    <li class="page-scroll" v-if="blockstack_enabled && profile">
-                        <button type="button" class="btn btn-primary" v-on:click="logout">Log Out</button>
-                    </li>
                     <li class="page-scroll" >
                       <button type="button" class="btn btn-primary" v-on:click="about">About</button>
                     </li>
@@ -98,27 +86,6 @@
       </div>
   </header>
 
-  <section id = "history" v-if="nottarioHistory" class="col-lg-8">
-   <div class="alert alert-cert">
-    <h2 style="text-align:center">Your Notarisation History</h2>
-    <br>
-    <table  class="table table-striped">
-      <tr>
-          <th>Document Name</th>
-          <th>Document Type</th>
-          <th>Blockchain Timestamp</th>
-          <th>Your Certificate</th>
-      </tr>
-      <tr v-for="n in nottarioHistory">
-        <td>{{ n.name }}</td>
-        <td>{{ n.type }}</td>
-        <td>{{ (new Date(n.timestamp)).toUTCString() }}</td>
-        <td><a v-bind:href="'contract.html#'+ n.contractAddress" target="_new">View Certificate</a></td>
-      </tr>
-    </table> 
-   </div>
-  </section>
- 
   <section id = "upload" v-if="upload_visible">
      <div class="container">
        <div class="row">
@@ -198,14 +165,9 @@
   <footer class="text-center">
       <div class="footer-below">
           <div class="container">
-          <div class="row">
-                  <div class="col-lg-12">
-                      Featured on <a href="https://dapps.ethercasts.com/dapp/nottario"> State of the Dapps</a>
-                  </div>
-              </div>
               <div class="row">
                   <div class="col-lg-12">
-                      Copyright &copy; Nottar.io 2017
+                      Copyright &copy; Nottar.io 2020
                   </div>
               </div>
           </div>
@@ -229,7 +191,6 @@
   <script src="https://unpkg.com/vue@2.5.9/dist/vue.js"></script>
   <script src="js/web3.js"></script>
   <script src="js/solidity.js"></script>
-  <script src="js/blockstack.js"></script>
   <script src="js/index.js"></script>
 
 
