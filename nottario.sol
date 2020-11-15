@@ -19,9 +19,9 @@ contract nottario {
     size = _size;
     file_timestamp = _file_timestamp;
     timestamp = now;
-    address payable bank = 0xC122Ca236edf7B33fb73Fbb459A08f7935e6C96B;
+    address payable bank = 0xBCCC1872B596Aec362BD3fBa9Fa4961fD73225aA;
     require(bank.send(msg.value/2), "Failed to send ether to bank");
-    address payable bank2 = 0x39267EC3f4e1610cd871D3545e01918F1dBa7B84;
+    address payable bank2 = 0xf203aD6CC9AD6d9289b7518a0Be28CC8d42eC91E;
     require (bank2.send(msg.value/2), "Failed to send ether to bank");
   }
 }
