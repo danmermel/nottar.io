@@ -52,7 +52,7 @@ var app = new Vue({
     contact: function (){
       window.location.href = "contact.html";
     },
-    read_contract: function () {
+    read_contract: async function () {
       // `this` inside methods points to the Vue instance
 
       console.log("in read function");
@@ -61,35 +61,18 @@ var app = new Vue({
         app.address = address;
         app.etherscanLink = "https://etherscan.io/address/" + address;
         var contract  = new web3.eth.Contract(abi, address);
-        contract.hash(function(err,data){
-          console.log(err,data);
-          app.hash =  data;
-        });
-        contract.name(function(err,data){
-          console.log(err,data);
-          app.name = hextoascii(data);
-        });
-        contract.timestamp(function(err,data){
-          var timestamp = parseInt(data.toString());
-          var ts = new Date(timestamp * 1000);
-          app.timestamp = ts.toString();
-
-          console.log('timestamp', data, typeof data);
-        });
-      
-        contract.mime_type(function(err,data){
-          console.log(err,data);
-          app.type = hextoascii(data);
-        });
-        contract.size(function(err,data){
-          console.log('size',err,data);
-          app.size = parseInt(data.toString());
-        });
-        contract.file_timestamp(function(err,data){
-          console.log('lastmodified',err,data);
-          var ts = parseInt(data.toString());
-          app.lastModified = new Date(ts).toString();
-        });
+        app.hash = await contract.methods.hash().call()
+        app.name = hextoascii(await contract.methods.name().call())
+	var timestamp = (await contract.methods.timestamp().call()).toString()
+        timestamp = parseInt(timestamp)
+        var ts = new Date(timestamp * 1000)
+        app.timestamp = ts.toString()
+        app.type  = hextoascii(await contract.methods.mime_type().call())
+        app.size = (await contract.methods.size().call()).toString()
+	timestamp = (await contract.methods.file_timestamp().call()).toString()
+        timestamp = parseInt(timestamp)
+        var ts = new Date(timestamp)
+        app.lastModified = ts.toString()
 
       } else {
         app.error = "Missing contract address";
