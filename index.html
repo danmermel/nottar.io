@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Nottar.io - Blockchain Notarisation Service</title>
+  <title>Nottario - Blockchain Notarisation Service</title>
 
   <!-- Bootstrap Core CSS -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +43,7 @@
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
                  <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
               </button>
-              <a class="navbar-brand" href="#page-top">Nottar.io</a>
+              <a class="navbar-brand" href="#page-top">Nottario</a>
           </div>
           <!-- /.navbar-collapse -->
 
@@ -52,6 +52,9 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="hidden">
                         <a href="#"></a>
+                    </li>
+                    <li class="page-scroll" >
+                      <button v-if="connected" type="button" disabled class="btn btn-primary" >Connected to MetaMask</button>
                     </li>
                     <li class="page-scroll" >
                       <button type="button" class="btn btn-primary" v-on:click="about">About</button>
@@ -74,7 +77,7 @@
           <div class="row">
               <div class="col-lg-12">
                   <div class="intro-text">
-                      <h1 class="name">Nottar.io</h1>
+                      <h1 class="name">Nottario</h1>
                       <hr class="star-light">
                       <span class="skills">Notarise documents using the Ethereum blockchain</span>
                   </div>

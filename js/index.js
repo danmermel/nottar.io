@@ -5,6 +5,7 @@ var app = new Vue({
   el: '#app',
   data: {
     ropsten: false,
+    connected: false,
     etherscanLink: "",
     hash: "",
     name: "",
@@ -24,9 +25,11 @@ var app = new Vue({
     setInterval(async function () {
       //console.log('here', web3.eth.accounts, web3.eth.accounts.length);
       if (typeof window.ethereum === 'undefined') {
+        //if you are in here, then you do not have metamask and so there is no point doing anything else
         app.web3Missing = true;
-      }
-      // check user's MetaMask is connected to the main network, otherwise display warning
+	return  
+      } 
+      // now you are continuoulsly checking  user's MetaMask is connected to the main network, otherwise display warning
       const netId = await web3.eth.net.getId()
       app.ropsten = (netId !== 1)
     }, 1000);
@@ -39,8 +42,14 @@ var app = new Vue({
     contact: function () {
       window.location.href = "contact.html";
     },
-    display_upload: function () {
+    connect: async function () {
+      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      app.connected = true
+    },
+    display_upload: async function () {
       window.scrollTo(0, 0);
+      await app.connect() //attempt to get the user to connect to metamask
       app.upload_visible = true;
     },
     cancel_upload: function () {
