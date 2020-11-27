@@ -43,9 +43,11 @@ var app = new Vue({
       window.location.href = "contact.html";
     },
     connect: async function () {
-      const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-      const account = accounts[0];
-      app.connected = true
+      if(!this.web3Missing && ethereum) {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const account = accounts[0];
+        app.connected = true
+      }
     },
     display_upload: async function () {
       window.scrollTo(0, 0);
