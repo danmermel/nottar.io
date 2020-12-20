@@ -36,12 +36,6 @@ var app = new Vue({
 
   },
   methods: {
-    about: function () {
-      window.location.href = "about.html";
-    },
-    contact: function () {
-      window.location.href = "contact.html";
-    },
     connect: async function () {
       if(!this.web3Missing && ethereum) {
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
