@@ -100,7 +100,7 @@ function verify_file(ev) {
   var reader = new FileReader();
   reader.onload = function(event) {
     //console.log('onload!',event);
-    app.droppedHash = web3.sha3(event.target.result);
+    app.droppedHash = web3.utils.sha3(event.target.result);
     console.log("new hash is ", app.droppedHash);
     console.log("old hash is ", app.hash);
     if (app.droppedHash == app.hash){
